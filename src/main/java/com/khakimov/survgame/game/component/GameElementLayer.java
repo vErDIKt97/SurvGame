@@ -24,7 +24,7 @@ public class GameElementLayer {
         for (int i = 0; i < enemies.size(); i++) {
             Enemy enemy = enemies.get(i);
             if (enemy.isVisible()) {
-                enemy.draw(g, hero);
+                enemy.draw(g, hero,enemies);
             } else {
                 Enemy remove = enemies.remove(i);
                 EnemyPool.giveBack(remove);

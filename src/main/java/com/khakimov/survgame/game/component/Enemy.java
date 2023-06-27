@@ -1,6 +1,5 @@
 package com.khakimov.survgame.game.component;
 
-import com.khakimov.survgame.game.Survival;
 import com.khakimov.survgame.util.Constant;
 import com.khakimov.survgame.util.GameUtil;
 
@@ -21,7 +20,7 @@ public class Enemy {
     static {
         enemyImages = GameUtil.loadBufferedImage(Constant.ENEMY_IMG_PATH);
         assert enemyImages != null;
-        }
+    }
 
     public static final int ENEMY_WIDTH = enemyImages.getWidth();
     public static final int ENEMY_HEIGHT = enemyImages.getHeight();
@@ -34,40 +33,75 @@ public class Enemy {
 
     public Enemy() {
         this.velocity = Constant.GAME_SPEED;
-        this.width =ENEMY_WIDTH;
+        this.width = ENEMY_WIDTH;
         enemyCollisionRect = new Rectangle();
         enemyCollisionRect.width = ENEMY_WIDTH;
     }
 
-    public void draw(Graphics g, Hero hero) {
+    public void draw(Graphics g, Hero hero, List<Enemy> enemies) {
         drawNormal(g);
         if (hero.isDead()) {
             return;
         }
-        movement(hero);
+        movement(hero, enemies);
 //      //绘制碰撞矩形
 //        g.setColor(Color.white);
 //        g.drawRect((int) pipeRect.getX(), (int) pipeRect.getY(), (int) pipeRect.getWidth(), (int) pipeRect.getHeight());
     }
 
-    private void movement(Hero hero) {
+    private void movement(Hero hero, List<Enemy> enemies) {
         int heroX = hero.getXRectangle();
         int heroY = hero.getYRectangle();
+
         if (x < heroX) {
-            x += velocity;
-            enemyCollisionRect.x +=velocity;
-        }
-        else {
-            x -= velocity;
-            enemyCollisionRect.x -= velocity;
+            Rectangle tempRect = new Rectangle(getEnemyCollisionRect().x + velocity,
+                    getEnemyCollisionRect().y,
+                    getEnemyCollisionRect().width,
+                    getEnemyCollisionRect().height);
+            for (Enemy enemy :
+                    enemies) {
+                if (!tempRect.intersects(enemy.getEnemyCollisionRect())) {
+                    x += velocity;
+                    enemyCollisionRect.x += velocity;
+                }
+            }
+        } else {
+            Rectangle tempRect = new Rectangle(getEnemyCollisionRect().x - velocity,
+                    getEnemyCollisionRect().y,
+                    getEnemyCollisionRect().width,
+                    getEnemyCollisionRect().height);
+            for (Enemy enemy :
+                    enemies) {
+                if (!tempRect.intersects(enemy.getEnemyCollisionRect())) {
+                    x -= velocity;
+                    enemyCollisionRect.x -= velocity;
+                }
+            }
         }
         if (y < heroY) {
-            y += velocity;
-            enemyCollisionRect.y += velocity;
-        }
-        else{
-            y -= velocity;
-            enemyCollisionRect.y -= velocity;
+            Rectangle tempRect = new Rectangle(getEnemyCollisionRect().x,
+                    getEnemyCollisionRect().y + velocity,
+                    getEnemyCollisionRect().width,
+                    getEnemyCollisionRect().height);
+            for (Enemy enemy :
+                    enemies) {
+                if (!tempRect.intersects(enemy.getEnemyCollisionRect())) {
+                    y += velocity;
+                    enemyCollisionRect.y += velocity;
+                }
+            }
+        } else {
+            Rectangle tempRect = new Rectangle(getEnemyCollisionRect().x,
+                    getEnemyCollisionRect().y - velocity,
+                    getEnemyCollisionRect().width,
+                    getEnemyCollisionRect().height);
+            for (Enemy enemy :
+                    enemies) {
+                if (!tempRect.intersects(enemy.getEnemyCollisionRect())) {
+                    y -= velocity;
+                    enemyCollisionRect.y -= velocity;
+                }
+            }
         }
     }
 
@@ -100,8 +134,8 @@ public class Enemy {
     }
 
     public void setAttribute(int x, int y, boolean visible) {
-        this.x=x;
-        this.y=y;
+        this.x = x;
+        this.y = y;
         this.height = enemyImages.getHeight();
         this.visible = visible;
         setRectangle(this.x, this.y, this.height);
@@ -127,8 +161,8 @@ public class Enemy {
     }
 
     public void hit(Hero hero) {
-        this.countLife -=1;
-        if (countLife==0)
+        this.countLife -= 1;
+        if (countLife == 0)
             die(hero);
     }
 
@@ -136,6 +170,7 @@ public class Enemy {
         public static final int FULL_ENEMY = 4;
         private static final List<Enemy> pool = new ArrayList<>();
         public static final int MAX_ENEMY_COUNT = 1; // 对象池中对象的最大个数
+
         public static void giveBack(Enemy enemy) {
             if (pool.size() < MAX_ENEMY_COUNT) {
                 pool.add(enemy);
