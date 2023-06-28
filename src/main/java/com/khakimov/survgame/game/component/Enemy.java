@@ -1,5 +1,6 @@
 package com.khakimov.survgame.game.component;
 
+import com.khakimov.survgame.game.Survival;
 import com.khakimov.survgame.util.Constant;
 import com.khakimov.survgame.util.GameUtil;
 
@@ -162,6 +163,7 @@ public class Enemy {
 
     public void hit(Hero hero) {
         this.countLife -= 1;
+        Survival.setCurrentReward(0.5f);
         if (countLife == 0)
             die(hero);
     }

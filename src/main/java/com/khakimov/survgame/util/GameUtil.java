@@ -84,6 +84,6 @@ public class GameUtil {
         return NDImageUtils.toTensor(
                 NDImageUtils.resize(
                         ImageFactory.getInstance().fromImage(observation).toNDArray(NDManager.newBaseManager(), Image.Flag.GRAYSCALE)
-                        , 80, 80));
+                        , 120, 120));
     }
 }

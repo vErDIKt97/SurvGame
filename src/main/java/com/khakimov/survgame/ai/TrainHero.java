@@ -38,12 +38,12 @@ import java.util.concurrent.*;
 public final class TrainHero {
     private static final Logger logger = LoggerFactory.getLogger(Survival.class);
 
-    public static final int OBSERVE = 1000; // gameSteps to observe before training
+    public static final int OBSERVE = 10000; // gameSteps to observe before training
     public static final int EXPLORE = 3000000; // frames over which to anneal epsilon
-    public static final int SAVE_EVERY_STEPS = 5000; // save model every 100,000 step
+    public static final int SAVE_EVERY_STEPS = 10000; // save model every 100,000 step
     public static final int REPLAY_BUFFER_SIZE = 50000; // number of previous transitions to remember
     public static final float REWARD_DISCOUNT = 0.9f; // decay rate of past observations
-    public static final float INITIAL_EPSILON = 0.01f;
+    public static final float INITIAL_EPSILON = 0.1f;
     public static final float FINAL_EPSILON = 0.0001f;
     public static final String PARAMS_PREFIX = "dqn-trained";
 
@@ -86,7 +86,7 @@ public final class TrainHero {
 
         DefaultTrainingConfig config = setupTrainingConfig();
         try (Trainer trainer = model.newTrainer(config)) {
-            trainer.initialize(new Shape(batchSize, 4, 80, 80));
+            trainer.initialize(new Shape(batchSize, 4, 120, 120));
             trainer.notifyListeners(listener -> listener.onTrainingBegin(trainer));
 
             RlAgent agent = new QAgent(trainer, REWARD_DISCOUNT);
