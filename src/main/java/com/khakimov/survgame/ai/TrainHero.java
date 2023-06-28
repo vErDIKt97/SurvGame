@@ -98,7 +98,7 @@ public final class TrainHero {
                             .build();
             agent = new EpsilonGreedy(agent, exploreRate);
 
-            int numOfThreads = 8;
+            int numOfThreads = 2;
             List<Callable<Object>> callables = new ArrayList<>(numOfThreads);
             callables.add(new GeneratorCallable(game, agent, training));
             if(training) {

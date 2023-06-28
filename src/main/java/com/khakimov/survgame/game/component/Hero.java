@@ -8,6 +8,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 
 import static com.khakimov.survgame.util.Constant.GAME_SPEED;
+import static com.khakimov.survgame.util.Constant.WINDOW_BAR_HEIGHT;
 
 public class Hero {
 
@@ -76,8 +77,8 @@ public class Hero {
     }
 
     private void movement() {
-        if ((heroCollisionRect.y < GameElementLayer.MAX_HEIGHT - HERO_HEIGHT * 2 && heroCollisionRect.y > GameElementLayer.MIN_HEIGHT) &&
-                (heroCollisionRect.x < GameElementLayer.MAX_HEIGHT && heroCollisionRect.x > GameElementLayer.MIN_HEIGHT - HERO_HEIGHT * 2)) {
+        if ((heroCollisionRect.y < GameElementLayer.MAX_HEIGHT - HERO_HEIGHT * 2 && heroCollisionRect.y > GameElementLayer.MIN_HEIGHT + WINDOW_BAR_HEIGHT) &&
+                (heroCollisionRect.x < GameElementLayer.MAX_HEIGHT - HERO_HEIGHT * 2 && heroCollisionRect.x > GameElementLayer.MIN_HEIGHT)) {
             Survival.setCurrentReward(0.1f);
         } else
             die();
@@ -124,6 +125,7 @@ public class Hero {
         g.setColor(Color.white);
         g.drawRect((int) heroCollisionRect.getX(), (int) heroCollisionRect.getY(), (int) heroCollisionRect.getWidth(), (int) heroCollisionRect.getHeight());
         g.drawRect((int) heroAttackRectangle.getX(), (int) heroAttackRectangle.getY(), (int) heroAttackRectangle.getWidth(), (int) heroAttackRectangle.getHeight());
+        //g.drawLine(1,WINDOW_BAR_HEIGHT,GameElementLayer.MAX_HEIGHT- HERO_HEIGHT * 2,GameElementLayer.MAX_HEIGHT);
     }
 
     public long getCurrentScore() {
