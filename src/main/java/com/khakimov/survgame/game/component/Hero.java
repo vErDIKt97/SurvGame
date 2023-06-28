@@ -79,7 +79,7 @@ public class Hero {
     private void movement() {
         if ((heroCollisionRect.y < GameElementLayer.MAX_HEIGHT - HERO_HEIGHT * 2 && heroCollisionRect.y > GameElementLayer.MIN_HEIGHT + WINDOW_BAR_HEIGHT) &&
                 (heroCollisionRect.x < GameElementLayer.MAX_HEIGHT - HERO_HEIGHT * 2 && heroCollisionRect.x > GameElementLayer.MIN_HEIGHT)) {
-            Survival.setCurrentReward(0.1f);
+
         } else
             die();
 

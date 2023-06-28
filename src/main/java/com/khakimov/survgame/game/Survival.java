@@ -138,17 +138,22 @@ public class Survival extends Frame implements RlEnv {
 
     @Override
     public void step(NDList action, boolean training) {
+        currentReward = 0.1f;
         if (action.singletonOrThrow().getInt(1) == 1) {
             hero.goLeft();
+            currentReward = 0.2f;
         }
         if (action.singletonOrThrow().getInt(2) == 1) {
             hero.goUp();
+            currentReward = 0.2f;
         }
         if (action.singletonOrThrow().getInt(3) == 1) {
             hero.goRight();
+            currentReward = 0.2f;
         }
         if (action.singletonOrThrow().getInt(4) == 1) {
             hero.goDown();
+            currentReward = 0.2f;
         }
         stepFrame();
         if (this.withGraphics) {
