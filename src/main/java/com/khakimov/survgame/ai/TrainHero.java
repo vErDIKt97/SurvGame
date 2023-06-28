@@ -40,7 +40,7 @@ public final class TrainHero {
 
     public static final int OBSERVE = 1000; // gameSteps to observe before training
     public static final int EXPLORE = 3000000; // frames over which to anneal epsilon
-    public static final int SAVE_EVERY_STEPS = 100000; // save model every 100,000 step
+    public static final int SAVE_EVERY_STEPS = 5000; // save model every 100,000 step
     public static final int REPLAY_BUFFER_SIZE = 50000; // number of previous transitions to remember
     public static final float REWARD_DISCOUNT = 0.9f; // decay rate of past observations
     public static final float INITIAL_EPSILON = 0.01f;
